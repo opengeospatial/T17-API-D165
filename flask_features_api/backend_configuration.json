@@ -1,0 +1,23 @@
+{
+	"server": {
+		"title": "TB-17 Experiments API Python Server",
+		"description": "TB-17 Experiments API Python Server"
+	},
+	"backends": [
+		{
+			"id": "cuberworxWFS_Foundation",
+            "type": "WFS",
+			"config": {
+				"baseURL": "https://test.cubewerx.com/cubewerx/cubeserv/demo?datastore=Foundation",
+				"types": {
+					"cw:coastl_1m": {
+						"temporalProperty": null
+					}
+				}
+			},
+			"collections": [
+				"cw:coastl_1m"
+			]
+		}
+	]
+}

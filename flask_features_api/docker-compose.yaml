@@ -1,0 +1,22 @@
+services:
+  flask-api:
+    image: tb17_apiexperiments_featuresserver_python
+    container_name: API_FEATURES_SERVER
+    build:
+      context: .
+      target: debug
+    ports:
+      - 8081:8080
+      - 5678:5678
+    volumes:
+      - .:/usr/src/app
+    environment:
+      - FLASK_DEBUG=1
+    entrypoint: [ "python", "-m", "debugpy", "--listen", "0.0.0.0:5678", "-m", "openapi_server.main",  "--wait-for-client", "--multiprocess", "-m", "flask", "run", "-h", "0.0.0.0", "-p", "5000" ]
+    networks:
+      - features-api
+
+networks:
+  features-api:
+    name: features-api
+
