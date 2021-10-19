@@ -21,21 +21,13 @@ def get_feature(collection_id, feature_id):  # noqa: E501
     :rtype: FeatureGeoJSON
     """
     backend = backends.getDataBackendForCollection(collection_id)
-    responseStr = backend.requestTransformer.getFeature(collection_id, feature_id)
-    
-    responseDict = json.loads(responseStr);
 
-    if(responseDict["type"] == "FeatureCollection"): 
-        if len(responseDict["features"]) > 0: #if response is featureCollection return first feature
-            if len(responseDict["features"]) > 1:
-                print("getFeature by ID request returned more than one feature, only return first feature of featureCollection")
-            return responseDict["features"][0]
-        else:
-            return Exception(code= "404", description="no feature found with ID {0} in collection {1}".format(feature_id, collection_id))           
-    elif(responseDict["type"] == "Feature"):
-        return responseDict #simply return single feature
-    else:
-        return Exception(code = 500 , description= "internal error, unknown response type for getFeature by ID request")
+    if backend is None:
+        return Exception(code= "404", description="collection {0} not found".format(collection_id)), 404
+
+    response = backend.requestTransformer.getFeature(collection_id, feature_id)
+    
+    return response
 
 
 
@@ -56,6 +48,10 @@ def get_features(collection_id, limit=None, bbox=None, datetime=None):  # noqa: 
     :rtype: FeatureCollectionGeoJSON
     """
     backend = backends.getDataBackendForCollection(collection_id)
-    responseStr = backend.requestTransformer.getFeatures(collection_id, bbox = bbox, limit = limit, datetime = datetime)
 
-    return json.loads(responseStr)
+    if backend is None:
+        return Exception(code= "404", description="collection {0} not found".format(collection_id)), 404
+
+    response = backend.requestTransformer.getFeatures(collection_id, bbox = bbox, limit = limit, datetime = datetime)
+
+    return response

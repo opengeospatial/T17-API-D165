@@ -33,6 +33,8 @@ def getAvailableDataBackends():
 def getBackendTypeFromString(backendTypeStr: str):
     if backendTypeStr.lower() == "wfs":
         return BackendType.WFS
+    elif backendTypeStr.lower() == "elasticsearch":
+        return BackendType.ELASTICSEARCH
     else:
         raise error("unknown backend type " + backendTypeStr)
 

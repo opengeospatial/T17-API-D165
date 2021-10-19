@@ -6,6 +6,8 @@ from openapi_server.backend.request_transformer import RequestTransformer
 from openapi_server.backend.dataaccess.http_access_layer import HTTPAccessLayer
 from openapi_server.backend.query_transformers.wfs_query_transformer import WFSQueryTransformer
 from xml.dom import minidom
+from openapi_server.models.exception import Exception
+import json
 
 class WFSRequestTransformer(RequestTransformer):
 
@@ -34,7 +36,7 @@ class WFSRequestTransformer(RequestTransformer):
         backendResp = self.http.get(self.wfsBaseURL, requestParams)
         resp = self.formatTransformer.transform(backendResp)
 
-        return resp
+        return json.loads(resp)
 
     def getFeature(self, collectionID: str, featureID: str):
         requestParams = {"request": "getFeature", "service" : "WFS", "version": "2.0.0", "outputFormat": "application/json", "typeName": collectionID}
@@ -42,9 +44,13 @@ class WFSRequestTransformer(RequestTransformer):
         requestParams.update(featureIdParams) #merge dicts 
 
         backendResp = self.http.get(self.wfsBaseURL, requestParams)
-        resp = self.formatTransformer.transform(backendResp)
+        resp = self.formatTransformer.transform(backendResp) #returns feature collection
+        feature = json.loads(resp)
 
-        return resp
+        if len(feature["features"]) > 0:
+            return feature["features"][0] #id query only matches a single feature
+        else:
+            return Exception(code= "404", description="feature {0} not found".format(featureID)), 404
 
     def getCollection(self, collectionID: str):
         return self.getCollections([collectionID])[0] #only one collection in the list

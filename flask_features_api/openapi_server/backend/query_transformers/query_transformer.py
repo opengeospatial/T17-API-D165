@@ -9,5 +9,5 @@ class QueryTransformer:
     def transformID(self, identifier: "str"):
         pass
 
-    def transformDateTime(self, datetime: "str"):
+    def transformDateTime(self, datetime: "str", temporalProperty: str):
         pass
