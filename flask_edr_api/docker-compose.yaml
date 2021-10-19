@@ -1,0 +1,36 @@
+services:
+  flask-api-debug:
+    profiles: ["debug"]
+    image: tb17_apiexperiments_edrserver_python
+    container_name: API_EDR_SERVER_debug
+    build:
+      context: .
+      target: debug
+    ports:
+      - 8080:8080
+      - 5678:5678
+    volumes:
+      - .:/usr/src/app
+    environment:
+      - FLASK_DEBUG=1
+    entrypoint: [ "python", "-m", "debugpy", "--listen", "0.0.0.0:5678", "-m", "openapi_server.main",  "--wait-for-client", "--multiprocess", "-m", "flask", "run", "-h", "0.0.0.0", "-p", "5000" ]
+    networks:
+      - edr-api
+  flask-api:
+    profiles: ["prod"]
+    image: tb17_apiexperiments_edrserver_python
+    container_name: API_EDR_SERVER
+    build:
+      context: .
+      target: prod
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/usr/src/app
+    networks:
+      - edr-api
+
+networks:
+  edr-api:
+    name: edr-api
+
