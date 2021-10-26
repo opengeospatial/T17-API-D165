@@ -118,7 +118,7 @@ Alternatively, credentials can be passed as [environment variables in the docker
 - *format transformer:* A format transfomer is optionally interposed if a data backend has no support for the netCDF format. Since the EDR implementation only serves netCDF files and has only a netCDF backend there are no format transformers used. 
 - *backend:* A backend stores the configuration for a instance of a backend type (e.g location of a netCDF file) and determines which type of request transformer has to be used for the specific backend type
 
-![architecture overview](https://gitlab.ogc.org/ogc/T17-D040-API-Experiments-ER/-/raw/master/ER/images/d165_api_edr_architecture.png "schematic representation of the architecture of the OGC API - EDR implementation with a single data backend")
+![architecture overview](https://raw.githubusercontent.com/opengeospatial/T17-API-D165/main/resources/diagrams/d165_api_edr_architecture.png "schematic representation of the architecture of the OGC API - EDR implementation with a single data backend")
 
 ## Deployment
 ### Docker
