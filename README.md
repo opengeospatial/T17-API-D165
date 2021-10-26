@@ -8,7 +8,7 @@
 - *format transformer:* A format transfomer is optionally interposed if a data backend has no support for the geoJSON format
 - *backend:* A backend stores the configuration for a instance of a backend type (e.g URL of a WFS instance) and determines which type of request transformer has to be used for that specific backend type
 
-![architecture overview](https://gitlab.ogc.org/ogc/T17-D040-API-Experiments-ER/-/raw/master/ER/images/d165_api_features_architecture.png?inline=true "schematic representation of the architecture of the OGC API - Features implementation with two data backends")
+![architecture overview](https://raw.githubusercontent.com/opengeospatial/T17-API-D165/main/resources/diagrams/d165_api_features_architecture.png "schematic representation of the architecture of the OGC API - Features implementation with two data backends")
 
 ## Deployment
 This section contains information on how to deploy the python server implementation(s).
