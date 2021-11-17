@@ -11,13 +11,14 @@ class ElasticsearchQueryTransformer(QueryTransformer):
         return {"from": 0, "size": limit}
 
     def transformBBox(self, bbox: "list[int]"):
+        print(bbox)
         bboxFilter = {
             "geo_shape": {
                 GEOM_ATTRIBUTE: {
                     "shape": {
                         "type": "envelope",
                         # [[minLon, maxLat], [maxLon, minLat]]
-                        "coordinates": [[bbox[0], bbox[3]], [bbox[2], bbox[1]]]
+                        "coordinates": [[bbox[1], bbox[2]], [bbox[3], bbox[0]]]
                     },
                     "relation": "INTERSECTS"
                 }
