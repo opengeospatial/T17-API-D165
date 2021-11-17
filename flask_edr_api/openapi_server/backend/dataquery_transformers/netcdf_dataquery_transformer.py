@@ -13,7 +13,7 @@ import pyproj
 class NetCDFDataQueryTransformer(DataQueryTransformer):
 
 
-    sel_tolerance = 10000000  # tolerance for position selection (nearest)
+    sel_tolerance = 10  # tolerance for position selection (nearest)
     destination_srs_number = 4326  # convert everything to WGS84
     destination_srs_epsg = "EPSG:4326"
     web_mercator_epsg = "EPSG:3857"
@@ -116,8 +116,7 @@ class NetCDFDataQueryTransformer(DataQueryTransformer):
         datetimeSplit = datetime.split(sep="/")  # can be datetime or interval
 
         if(len(datetimeSplit) == 1):  # datetime
-            # no equals range filter in elasticsearch
-            return da.loc[dict(time=self.formatDatetime(datetimeSplit[0]))]
+            return da.sel(time=self.formatDatetime(datetimeSplit[0]), method="nearest")
         else:
             if datetimeSplit[0] == "..":  # earlier
                 return da.loc[dict(time=slice(None, self.formatDatetime(datetimeSplit[1])))]
