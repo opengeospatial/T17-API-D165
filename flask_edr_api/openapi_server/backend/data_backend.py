@@ -7,6 +7,9 @@ class BackendType(Enum):
     NETCDF = 1
 
 class DataBackend:
+    """
+     DataBackend associates backend configuration with the corresponding request transformer for the backend type
+    """
 
     def __init__(self, id: str, backendType: BackendType, availableCollections: dict , config: dict):
         self.requestTransformer: RequestTransformer 
