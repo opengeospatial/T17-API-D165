@@ -84,7 +84,7 @@ def get_conformance_declaration():  # noqa: E501
 
     :rtype: ConfClasses
     """
-    return 'do some magic!'
+    return ConfClasses(conforms_to=["http://www.opengis.net/spec/ogcapi-edr-1/1.0/req/core"])
 
 
 def get_landing_page():  # noqa: E501
