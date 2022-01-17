@@ -13,6 +13,9 @@ from flask import request
 
 
 class ElasticsearchRequestTransformer(RequestTransformer):
+    """
+        converts OGC API - Features requests in Elasticsearch requests
+    """
 
     config = None
     elasticSearchClient = None
@@ -21,7 +24,7 @@ class ElasticsearchRequestTransformer(RequestTransformer):
     def __init__(self, config):
         self.config = config
         
-        if "awsAuth" in config:
+        if "awsAuth" in config: #if AWS OpenSearchService/ElasticsearchService
             
             self.elasticSearchClient = getElasticsearchClient(self.config, awsauth= getAWSAuth(self.config["awsAuth"]))
         else:

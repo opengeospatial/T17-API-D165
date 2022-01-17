@@ -4,6 +4,9 @@ from openapi_server.models.extent_spatial import ExtentSpatial
 from xml.dom import minidom, expatbuilder
 
 class WFSCapabilitiesToCollectionTransformer(FormatTransformer):
+    """
+        parses collection information from WFS capabilities document
+    """
 
     def transform(self, input: str):
         """

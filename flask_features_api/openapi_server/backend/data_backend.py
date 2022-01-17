@@ -7,9 +7,12 @@ from openapi_server.backend.request_transformer import RequestTransformer
 
 class BackendType(Enum):
     WFS = 1
-    ELASTICSEARCH =2
+    ELASTICSEARCH = 2
 
 class DataBackend:
+    """
+     DataBackend associates backend configuration with the corresponding request transformer for the backend type
+    """
 
     def __init__(self, id: str, backendType: BackendType, availableCollections: list , config: dict):
         self.requestTransformer: RequestTransformer 
@@ -19,7 +22,8 @@ class DataBackend:
         self.backendType = backendType
         self.config = config
 
-        if backendType is BackendType.WFS:
+        #create request transformer for backend type
+        if backendType is BackendType.WFS: 
             if "baseURL" not in config:
                 raise ValueError("parameter baseURL is missing in config")
 

@@ -10,6 +10,9 @@ from openapi_server.models.exception import Exception
 import json
 
 class WFSRequestTransformer(RequestTransformer):
+    """
+        converts OGC API - Features requests in WFS 2.0.0 requests
+    """
 
     def __init__(self, wfsBackendConfig: dict):
         self.wfsBackendConfig = wfsBackendConfig
@@ -61,7 +64,7 @@ class WFSRequestTransformer(RequestTransformer):
         capabilitesXML = self.http.get(self.wfsBaseURL, requestParams)
 
         collections = [];
-        for id in collectionsIDs:
+        for id in collectionsIDs: #get collection information from capabilites for all collection listed in backend config
             collection = self.parseWFSCapabilities(capabilitesXML, id)
             collections.append(collection)
 
@@ -69,12 +72,15 @@ class WFSRequestTransformer(RequestTransformer):
 
 
 
-    def parseWFSCapabilities(self, capabilitiesXML: str, collectionID: str):       
-        dom = minidom.parseString(capabilitiesXML)
+    def parseWFSCapabilities(self, capabilitiesXML: str, collectionID: str):   
+        #parse collection info from wfs capabilities document    
+        dom = minidom.parseString(capabilitiesXML)#parse capabilites xml
+        #get all feature types listed in capabilities xml
         featureTypes = dom.getElementsByTagNameNS("*", "FeatureType") #ignore namespace
 
         for featureType in featureTypes:
             featureTypeID = featureType.getElementsByTagNameNS("*", "Name")
+            #if feature type equals collection id 
             if featureTypeID[0].firstChild.data == collectionID: #Name tag occurs only one within each FeatureType tag
                 return self.capabilitesTransformer.transform(featureType.toxml("utf-8")) #as string
             

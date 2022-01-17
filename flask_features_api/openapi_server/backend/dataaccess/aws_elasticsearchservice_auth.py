@@ -3,6 +3,9 @@ import boto3
 import os
 
 def getAWSAuth(awsConfig):
+    """
+        authenticate at Amazon Web Service Elasticsearch Service
+    """
     region = awsConfig["region"]
     service = 'es' #elasticsearchservice
     

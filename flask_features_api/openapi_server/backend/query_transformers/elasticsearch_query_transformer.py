@@ -6,6 +6,9 @@ GEOM_ATTRIBUTE = 'geometry'
 
 
 class ElasticsearchQueryTransformer(QueryTransformer):
+    """
+    transforms API - Features getItems queries into Elasticsearch DSL
+    """
 
     def transformLimit(self, limit: "int"):
         return {"from": 0, "size": limit}

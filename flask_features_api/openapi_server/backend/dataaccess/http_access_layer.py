@@ -3,6 +3,9 @@ import ssl
 from urllib.parse import urlparse, parse_qs
 
 class HTTPAccessLayer:
+    """
+        helper class for generic http GET requests
+    """
 
     def get(self, baseURL: "str", urlParams: "dict[str, str]"):
         http = urllib3.PoolManager()
