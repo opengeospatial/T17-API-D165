@@ -11,14 +11,26 @@
 ![architecture overview](https://raw.githubusercontent.com/opengeospatial/T17-API-D165/main/resources/diagrams/d165_api_features_architecture.png "schematic representation of the architecture of the OGC API - Features implementation with two data backends")
 
 ## Deployment
-This section contains information on how to deploy the python server implementation(s).
-### Docker
-There is a docker image available that deploys the OGC API - Features server (python flask app) with _uwsgi_ and _nginx_ in a single container.  
-The docker image can be pulled from Docker Hub.  
-`docker pull arnevogt/tb17_apiexperiments_featuresserver_python` (location will be changed in the near future)  
-Port _8080_ is exposed.  
+This section contains information on how to deploy the python server implementation.
+### Run locally
+The application can be started locally using the build-in Flask webserver. This is not meant for use in a production environment and should only be used for development and debugging. Before running the application all required python packages must be installed (defined in *requirements.txt*). Using a virtual python environment (like VENV) is helpful for managing the required packages.  
+Start the the application with the following command:  
+`python -m openapi_server.main.py`
+### Run with Docker
+The easiest way to deploy and run the application is using Docker. The dockerfile is structured in such a way that all required dependencies are defined in it. It is also structured as a multistage build comprising targets for production deployment and debugging.
+For production deplyoment use the following command to build the docker image:  
+`docker build -t tb17_apiexperiments_featuresserver_python --target prod .`  
+The resulting image uses production-ready webserver.  
+For debugging purposes use the following command to build the docker image:  
+`docker build -t tb17_apiexperiments_featuresserver_python --target debug .`  
+The resulitng image uses the built-in Flask server and has additional debugging dependencies installed. 
 To start a docker container run the following command:  
-`docker run -p 8080:8080 arnevogt/tb17_apiexperiments_featuresserver_python`
+`docker run -p 8080:8080 tb17_apiexperiments_featuressserver_python`
+#### Debugging with Docker and Visual Studio Code
+The repository includes a launch configuration (*.vscode/launch.json*) for the open-source IDE Visual Studio Code that can be used for debugging while running the application in a docker container.  
+First start the application with Docker Compose:  
+`docker-compose up --profile debug`.  
+Second, simply start the debugger in Visual Studio Code (*Run -> Start Debugging*). After that it is possible to debug the application within Visual Studio Code (e.g. defining break points) as if it was running locally without Docker.
 #### Configuration
 The default backend configuration can be overridden by binding a local configuration file to the docker container. This can be done by adding a volume binding to the above run command.  
 `-v /path/to/backend_configuration.json:/usr/src/app/backend_configuration.json`  
@@ -121,13 +133,26 @@ Alternatively, credentials can be passed as [environment variables in the docker
 ![architecture overview](https://raw.githubusercontent.com/opengeospatial/T17-API-D165/main/resources/diagrams/d165_api_edr_architecture.png "schematic representation of the architecture of the OGC API - EDR implementation with a single data backend")
 
 ## Deployment
-### Docker
-There is a docker image available that deploys the OGC API - EDR server (python flask app) with _uwsgi_ and _nginx_ in a single container.  
-The docker image can be pulled from Docker Hub.  
-`docker pull arnevogt/tb17_apiexperiments_edrsserver_python` (location will be changed in the near future)  
-Port _8080_ is exposed.  
+This section contains information on how to deploy the python server implementation.
+### Run locally
+The application can be started locally using the build-in Flask webserver. This is not meant for use in a production environment and should only be used for development and debugging. Before running the application all required python packages must be installed (defined in *requirements.txt*). Using a virtual python environment (like VENV) is helpful for managing the required packages. Additionaly this EDR implementation requires [GDAL](https://gdal.org/) and GDAL python bindings.   
+Start the the application with the following command:  
+`python -m openapi_server.main.py`
+### Run with Docker
+The easiest way to deploy and run the application is using Docker. The dockerfile is structured in such a way that all required dependencies (python packages and GDAL) are defined in it. It is also structured as a multistage build comprising targets for production deployment and debugging.
+For production deplyoment use the following command to build the docker image:  
+`docker build -t tb17_apiexperiments_edrserver_python --target prod .`  
+The resulting image uses production-ready webserver.  
+For debugging purposes use the following command to build the docker image:  
+`docker build -t tb17_apiexperiments_edrserver_python --target debug .`  
+The resulitng image uses the built-in Flask server and has additional debugging dependencies installed. 
 To start a docker container run the following command:  
-`docker run -p 8080:8080 arnevogt/tb17_apiexperiments_edrsserver_python`
+`docker run -p 8080:8080 tb17_apiexperiments_edrserver_python`
+#### Debugging with Docker and Visual Studio Code
+The repository includes a launch configuration (*.vscode/launch.json*) for the open-source IDE Visual Studio Code that can be used for debugging while running the application in a docker container.  
+First start the application with Docker Compose:  
+`docker-compose up --profile debug`.  
+Second, simply start the debugger in Visual Studio Code (*Run -> Start Debugging*). After that it is possible to debug the application within Visual Studio Code (e.g. defining break points) as if it was running locally without Docker.
 #### Configuration
 The default backend configuration can be overridden by binding a local configuration file to the docker container. This can be done by adding a volume binding to the above run command.  
 `-v /path/to/backend_configuration.json:/usr/src/app/backend_configuration.json`  
