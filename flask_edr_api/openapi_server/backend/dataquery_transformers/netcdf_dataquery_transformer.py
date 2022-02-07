@@ -11,6 +11,9 @@ from dateutil.parser import parse
 import pyproj
 
 class NetCDFDataQueryTransformer(DataQueryTransformer):
+    """
+        execute EDR data query on NetCDF file
+    """
 
 
     sel_tolerance = 10  # tolerance for position selection (nearest)

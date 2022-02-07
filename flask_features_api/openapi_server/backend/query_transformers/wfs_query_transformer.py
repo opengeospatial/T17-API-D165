@@ -20,6 +20,9 @@ datetimeEarlier_template = """
 datetimeBetween_template = "\"<ogc:Filter><ogc:PropertyIsBetween><ogc:PropertyName>{temporalProperty}</ogc:PropertyName><ogc:Function name=\"dateParse\"><ogc:LowerBoundary>{lower}</ogc:LowerBoundary></ogc:Function><ogc:Function name=\"dateParse\"><ogc:UpperBoundary>{upper}</ogc:UpperBoundary></ogc:Function></ogc:PropertyIsBetween></ogc:Filter>\""
 
 class WFSQueryTransformer(QueryTransformer):
+    """
+      converts getItem queries into WFS filter expressions
+    """
 
     def transformLimit(self, limit: "int"):
         return {"count": str(limit)}
