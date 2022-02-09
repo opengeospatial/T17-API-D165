@@ -38,7 +38,7 @@ To start a docker container run the following command:
 #### Debugging with Docker and Visual Studio Code
 The repository includes a launch configuration (*.vscode/launch.json*) for the open-source IDE Visual Studio Code that can be used for debugging while running the application in a docker container.  
 First start the application with Docker Compose:  
-`docker-compose up --profile debug`.  
+`docker-compose --profile debug up`.  
 Second, simply start the debugger in Visual Studio Code (*Run -> Start Debugging*). After that it is possible to debug the application within Visual Studio Code (e.g. defining break points) as if it was running locally without Docker.
 #### Configuration
 The default backend configuration can be overridden by binding a local configuration file to the docker container. This can be done by adding a volume binding to the above Docker run command.  
