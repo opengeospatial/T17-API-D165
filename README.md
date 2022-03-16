@@ -3,7 +3,10 @@ The API Experiments Server implementation comprises separate implementations of 
 
 This development was part of the OGC Testbed 17 API Experiments thread.
 
-## Structure
+## Structure of this Repository
+This repository consists of two separate server applications (one for OGC API - Features and one for OGC API EDR). For each of these applications there is a separate project in the subfolders of this repository. The subfolders readme files contain specific information about the code structure and deployment.
 ### OGC API Features
+Click [here](https://github.com/opengeospatial/T17-API-D165/tree/main/flask_features_api) to go to OGC API - Features implementation
 ### OGC API Environmental Data Retrieval
+Click [here](https://github.com/opengeospatial/T17-API-D165/tree/main/flask_edr_api) to go to OGC API - EDR implementation.
 
